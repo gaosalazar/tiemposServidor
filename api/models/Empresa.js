@@ -1,5 +1,5 @@
 /**
- * Persona.js
+ * Empresa.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -15,34 +15,32 @@ module.exports = {
 
     id: { type: 'number', autoIncrement: true },
 
-    nombre: { type: 'string', required: true },
+    nombre: { type: 'string' },
 
-    identificacion: { type: 'string', required: true },
-
-    correo: { type: 'string', isEmail: true, required: true },
+    ruc: { type: 'string' },
 
     direccion: { type: 'string' },
 
     telefono: { type: 'string' },
 
-    es_cliente: {  type: 'boolean', defaultsTo: false, },
+    correo: { type: 'string' },
 
-    es_empleado: {  type: 'boolean', defaultsTo: false, },
+    personas: { collection: 'persona', via: 'empresa' },
+
+    vehiculos: {collection:'vehiculo', via : 'empresa'},
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-    vehiculos: {collection:'vehiculo', via : 'persona'},
+
 
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    empresa: {model: 'empresa'}
-
   },
 
-  primarykey: 'id'
+  primaryKey: 'id'
 
 };
 
