@@ -1,45 +1,16 @@
-/**
- * Persona.js
- *
- * @description :: A model definition represents a database table/collection.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
 
   attributes: {
-
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
     id: { type: 'number', autoIncrement: true },
-
     nombre: { type: 'string', required: true },
-
     identificacion: { type: 'string', required: true },
-
     correo: { type: 'string', isEmail: true, required: true },
-
     direccion: { type: 'string' },
-
     telefono: { type: 'string' },
-
     es_cliente: {  type: 'boolean', defaultsTo: false, },
-
     es_empleado: {  type: 'boolean', defaultsTo: false, },
-
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
     vehiculos: {collection:'vehiculo', via : 'persona'},
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-
     empresa: {model: 'empresa'}
-
   },
 
   primarykey: 'id'
