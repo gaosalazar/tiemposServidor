@@ -6,7 +6,8 @@ module.exports = {
     numero_motor: { type: 'string' },
     numero_chasis: { type: 'string' },
     empresa: { model: 'empresa' },
-    persona: { model: 'persona' }
+    persona: { model: 'persona' },
+    modelo: {model: 'modelo'}
   },
 
   primaryKey: 'id'
