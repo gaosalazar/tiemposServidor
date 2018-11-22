@@ -10,7 +10,8 @@ module.exports = {
     es_cliente: {  type: 'boolean', defaultsTo: false, },
     es_empleado: {  type: 'boolean', defaultsTo: false, },
     vehiculos: {collection:'vehiculo', via : 'persona'},
-    empresa: {model: 'empresa'}
+    empresa: {model: 'empresa'},
+    ordenes: {collection: 'orden', via: 'persona'}
   },
 
   primarykey: 'id'
