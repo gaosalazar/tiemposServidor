@@ -7,7 +7,8 @@ module.exports = {
     telefono: { type: 'string' },
     correo: { type: 'string', isEmail: true, required: true },
     personas: { collection: 'persona', via: 'empresa' },
-    vehiculos: {collection:'vehiculo', via : 'empresa'}
+    vehiculos: {collection:'vehiculo', via : 'empresa'},
+    usuarios: { collection: 'usuario', via: 'empresa', through: 'empresausuario' }
   },
   primaryKey: 'id'
 };
