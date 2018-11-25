@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 module.exports = {
   login: function (req, res) {
     var body = req.body;
-    console.log(body)
     Usuario.findOne({ nombre: body.nombre }).exec(function (err, usuario) {
       if (err) {
         return res.serverError(err);
@@ -24,6 +23,12 @@ module.exports = {
 
 
   },
+
+  logout: function(req, res) {
+    req.session.destroy(function(err) {
+         return res.ok('Sesión cerrada');
+    });
+}
 
 };
 

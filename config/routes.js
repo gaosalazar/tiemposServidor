@@ -20,7 +20,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-  'POST /login': 'Usuario.login'
+  'POST /login': 'Usuario.login',
+  'DELETE /logout': 'Usuario.logout'
 
 
   /***************************************************************************
