@@ -1,48 +1,29 @@
-/**
- * UsuarioController
- *
- * @description :: Server-side actions for handling incoming requests.
- * @help        :: See https://sailsjs.com/docs/concepts/actions
- */
+const bcrypt = require('bcrypt');
 
 module.exports = {
-  
+  login: function (req, res) {
+    var body = req.body;
+    console.log(body)
+    Usuario.findOne({ nombre: body.nombre }).exec(function (err, usuario) {
+      if (err) {
+        return res.serverError(err);
+      }
+      if (!usuario) {
+        return res.notFound('No existe el usuario');
+      }
 
-  /**
-   * `UsuarioController.id()`
-   */
-  id: async function (req, res) {
-    return res.json({
-      todo: 'id() is not implemented yet!'
+    
+
+      if (!bcrypt.compareSync(body.password, usuario.password)) {
+        return res.serverError('Contraseña incorrecta');
+      }
+
+      req.session.me = usuario.id;
+      return res.ok({ id: usuario });
     });
+
+
   },
-
-  /**
-   * `UsuarioController.nombre()`
-   */
-  nombre: async function (req, res) {
-    return res.json({
-      todo: 'nombre() is not implemented yet!'
-    });
-  },
-
-  /**
-   * `UsuarioController.correo()`
-   */
-  correo: async function (req, res) {
-    return res.json({
-      todo: 'correo() is not implemented yet!'
-    });
-  },
-
-  /**
-   * `UsuarioController.password()`
-   */
-  password: async function (req, res) {
-    return res.json({
-      todo: 'password() is not implemented yet!'
-    });
-  }
 
 };
 

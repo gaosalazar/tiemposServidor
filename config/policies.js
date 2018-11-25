@@ -17,6 +17,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+   '*': 'estalogueado',
+   'usuario/login': true
 
 };
