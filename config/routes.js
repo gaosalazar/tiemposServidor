@@ -21,6 +21,7 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
   'POST /login': 'Usuario.login',
+  '/token': 'Usuario.token',
   'DELETE /logout': 'Usuario.logout'
 
 

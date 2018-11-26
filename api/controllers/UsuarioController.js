@@ -1,34 +1,70 @@
-const bcrypt = require('bcrypt');
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 
 module.exports = {
+  /**
+   * this is used to authenticate user to our api using either email and password
+   * POST /login
+   * @param req
+   * @param res
+   */
   login: function (req, res) {
-    var body = req.body;
-    Usuario.findOne({ nombre: body.nombre }).exec(function (err, usuario) {
-      if (err) {
-        return res.serverError(err);
-      }
-      if (!usuario) {
-        return res.notFound('No existe el usuario');
-      }
 
-    
+    /**
+     * this is param checking if they are provided
+     */
+    if (!_.has(req.body, 'nombre') || !_.has(req.body, 'password')) {
+      return res.serverError("No field should be empty.");
+    }
 
-      if (!bcrypt.compareSync(body.password, usuario.password)) {
-        return res.serverError('Contraseña incorrecta');
-      }
+    /**
+     * check if the username matches any email or phoneNumber
+     */
+    Usuario.findOne({
+      nombre: req.body.nombre
+    }).exec(function callback(err, user) {
+      if (err) return res.serverError(err);
 
-      req.session.me = usuario.id;
-      return res.ok({ id: usuario });
+      if (!user) return res.serverError("User not found, please sign up.");
+
+
+      //check password
+      bcrypt.compare(req.body.password, user.password, function (error, matched) {
+        if (error) return res.serverError(error);
+
+        if (!matched) return res.serverError("Invalid password.");
+
+        //save the date the token was generated for already inside toJSON()
+
+        var token = jwt.sign(user.toJSON(), "this is my secret key", {
+          expiresIn: '10m',
+          
+
+        });
+
+        //return the token here
+        res.ok(token);
+      });
+
     });
-
-
   },
 
-  logout: function(req, res) {
-    req.session.destroy(function(err) {
-         return res.ok('Sesión cerrada');
+  /**
+   * this is used to request for another token when the other token is about
+   * expiring so for next request call the token can be validated as true
+   * GET /token
+   * @param req
+   * @param res
+   */
+  token: function (req, res) {
+    Usuario.findOne(req.user.id).exec(function callback(error, user) {
+      if (error) return res.serverError(error);
+      if (!user) return res.serverError("User not found");
+
+      var token = jwt.sign(user.toJSON(), "this is my secret key", {
+        expiresIn: '10m'
+      });
+      res.ok(token);
     });
-}
-
+  }
 };
-
